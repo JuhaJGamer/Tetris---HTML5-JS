@@ -251,7 +251,7 @@ function update(time = 0) {
 }
 
 function updateScore() {
-    document.getElementById('score').innerText = player.score;
+    document.getElementById('score').innerText = "Score: " + player.score;
 }
 
 document.addEventListener('keydown', event => {
