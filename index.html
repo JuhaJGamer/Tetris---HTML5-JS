@@ -9,6 +9,26 @@
         font-size: 2em;
         text-align: center;
       }
+      .nextblock {
+        position:absolute;
+        left:15%;
+        top:20%;
+        width:160px;
+        height:160px;
+      }
+      .blockinfo1 {
+        position:absolute;
+        float:all;
+        left:16%;
+        top:14%;
+      }
+      .blockinfo2
+      {
+        position:absolute;
+        float:all;
+        left:10%;
+        top:35%;
+      }
       canvas {
         border: solid .2em #fff;
         height: 90vh;
@@ -17,7 +37,10 @@
 </head>
 <body>
     <div id="score"></div>
-    <canvas id="tetris" width="240" height="400" />
-    <script src="Tetris.js"></script> //This is case-sensitive
+    <canvas id="tetris" width="240" height="400"> </canvas>
+    <p class="blockinfo1">Next: </p>
+    <p class="blockinfo2">Help:<br> Q - Rotate CCW<br> W - Rotate CW<br></p>
+    <canvas class="nextblock" id="nextblock" width="80" height="80"></canvas>
+    <script src="Tetris.js"></script>
 </body>
 </html>

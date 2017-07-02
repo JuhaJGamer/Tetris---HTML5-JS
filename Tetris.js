@@ -1,10 +1,13 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
+const nextc = document.getElementById('nextblock');
+const nextcc = nextc.getContext('2d');
 var audio = new Audio('tetris_theme_a.mp3');
 audio.loop = true;
 audio.play();
 
 context.scale(20, 20);
+nextcc.scale(10,10);
 
 function arenaSweep() {
     let rowCount = 0;
@@ -103,7 +106,7 @@ function drawMatrix(matrix, offset) {
                 context.fillStyle = colors[value];
                 context.fillRect(x + offset.x,
                                  y + offset.y,
-                                 1, 1);
+                                 1 , 1);
             }
         });
     });
@@ -113,8 +116,32 @@ function draw() {
     context.fillStyle = '#000';
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawMatrix(arena, {x: 0, y: 0});
-    drawMatrix(player.matrix, player.pos);
+    drawMatrix(arena, {x: 0, y: 0},context);
+    drawMatrix(player.matrix, player.pos,context);
+    drawNext();
+}
+
+function drawNext()
+{
+    nextcc.fillStyle = '#000';
+    let offset = {x: 0, y:0};
+    if(player.nbt === 'T'){ offset = {x: 1, y: 2};}
+    else if(player.nbt === 'I'){ offset = {x: 1, y: 0};}
+    else if(player.nbt === 'J'){ offset = {x: 2, y: 1};}
+    else if(player.nbt === 'L'){ offset = {x: 0, y: 1};}
+    else if(player.nbt === 'O'){ offset = {x: 2, y: 2};}
+    else if(player.nbt === 'S'){ offset = {x: 1, y: 2};}
+    else if(player.nbt === 'Z'){ offset = {x: 1, y: 2};}
+    else { offset = {x: 0, y: 0};}
+    nextcc.fillRect(0,0,canvas.width,canvas.height);
+    player.nextblock.forEach((row, y) => {
+        row.forEach((value, x) => {
+            if (value !== 0) {
+                nextcc.fillStyle = colors[value];
+                nextcc.fillRect(x * 2 + offset.x, y * 2 + offset.y, 2 , 2);
+            }
+        });
+    });
 }
 
 function merge(arena, player) {
@@ -168,7 +195,18 @@ function playerMove(offset) {
 
 function playerReset() {
     const pieces = 'TJLOSZI';
-    player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+    if(player.nextblock === null)
+    {
+        player.nbt = pieces[pieces.length * Math.random() | 0];
+        player.nextblock = createPiece(player.nbt);
+        player.matrix = createPiece(pieces[pieces.length * Math.random() | 0]);
+    }
+    else
+    {
+        player.matrix = player.nextblock;
+        player.nbt = pieces[pieces.length * Math.random() | 0];
+        player.nextblock = createPiece(player.nbt);
+    }
     player.pos.y = 0;
     player.pos.x = (arena[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
@@ -255,6 +293,8 @@ const player = {
     pos: {x: 0, y: 0},
     matrix: null,
     score: 0,
+    nextblock:null, 
+    nbt: 'T',
 };
 
 playerReset();
