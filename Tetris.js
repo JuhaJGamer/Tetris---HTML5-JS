@@ -2,12 +2,30 @@ const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 const nextc = document.getElementById('nextblock');
 const nextcc = nextc.getContext('2d');
+let paused = false;
+let gameTime = 0;
 var audio = new Audio('tetris_theme_a.mp3');
 audio.loop = true;
 audio.play();
 
 context.scale(20, 20);
 nextcc.scale(10,10);
+
+function pause()
+{
+    if(!paused)
+    {
+        paused = true;
+        audio.pause();
+        if(player.score >= 300) {player.score -= 300;} else {player.score = 0;}
+        updateScore();
+    }
+    else
+    {
+        paused = false;
+        audio.play();
+    }
+}
 
 function arenaSweep() {
     let rowCount = 0;
@@ -239,7 +257,9 @@ let lastTime = 0;
 function update(time = 0) {
     const deltaTime = time - lastTime;
 
-    dropCounter += deltaTime;
+    if(!paused) gameTime += deltaTime;
+
+    if(!paused) dropCounter += deltaTime;
     if (dropCounter > dropInterval) {
         playerDrop();
     }
@@ -255,16 +275,23 @@ function updateScore() {
 }
 
 document.addEventListener('keydown', event => {
-    if (event.keyCode === 37) {
-        playerMove(-1);
-    } else if (event.keyCode === 39) {
-        playerMove(1);
-    } else if (event.keyCode === 40) {
-        playerDrop();
-    } else if (event.keyCode === 81) {
-        playerRotate(-1);
-    } else if (event.keyCode === 87) {
-        playerRotate(1);
+    if(!paused){
+        if (event.keyCode === 37) {
+          playerMove(-1);
+        } else if (event.keyCode === 39) {
+            playerMove(1);
+        } else if (event.keyCode === 40) {
+            playerDrop();
+        } else if (event.keyCode === 81) {
+            playerRotate(-1);
+        } else if (event.keyCode === 87) {
+            playerRotate(1);
+        }
+        else if (event.keyCode === 32) {pause();}
+    }
+    else
+    {
+        if (event.keyCode === 32) {pause();}
     }
 });
 

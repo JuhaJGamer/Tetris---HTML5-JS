@@ -20,6 +20,7 @@
         position:absolute;
         float:all;
         left:16vw;
+        width:5vw;
         top:3vw;
       }
       .blockinfo2
@@ -28,6 +29,15 @@
         float:all;
         left:10vw;
         top:17vw;
+        width:25vw;
+        text-align: left;
+      }
+      .blockinfo3 {
+        position:absolute;
+        float:all;
+        right:5vw;
+        top:3vw;
+        width:15vw;
         text-align: left;
       }
       canvas {
@@ -42,6 +52,7 @@
     <canvas id="tetris" width="240" height="400"> </canvas>
     <p class="blockinfo1">Next: </p>
     <p class="blockinfo2">Help:<br>&nbspQ - Rotate CCW<br>&nbspW - Rotate CW<br>&nbspArrows:<br>&nbsp&nbspLeft - Move left<br>&nbsp&nbspRight - Move right<br>&nbsp&nbspDown - Quick Drop<br>&nbspSpace - Pause </p>
+    <p class="blockinfo3">SEE: Pausing deducts<br> 300 pts from your<br> score to prevent cheating</p>
     <canvas class="nextblock" id="nextblock" width="80" height="80"></canvas>
     <script src="Tetris.js"></script>
 </body>
