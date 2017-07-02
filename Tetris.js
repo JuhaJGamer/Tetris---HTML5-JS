@@ -4,6 +4,11 @@ const nextc = document.getElementById('nextblock');
 const nextcc = nextc.getContext('2d');
 let paused = false;
 let gameTime = 0;
+let deltaTime = 0;
+let lost = false;
+let secTime = 0;
+let remSecTime = 0;
+let minTime = 0;
 var audio = new Audio('tetris_theme_a.mp3');
 audio.loop = true;
 audio.play();
@@ -229,8 +234,12 @@ function playerReset() {
     player.pos.x = (arena[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
     if (collide(arena, player)) {
-        arena.forEach(row => row.fill(0));
+        arena.forEach(row => {row.fill(8);});
+        document.getElementById('lastscore').innerText = "Last Score: " + player.score;
+        document.getElementById('lasttime').innerText = "Last Time: " + format2(minTime) + ":" + format2(remSecTime);
         player.score = 0;
+        gameTime = 0;
+        arena.forEach(row => {row.fill(0);});
         updateScore();
     }
 }
@@ -255,9 +264,12 @@ let dropInterval = 1000;
 
 let lastTime = 0;
 function update(time = 0) {
-    const deltaTime = time - lastTime;
+    deltaTime = time - lastTime;
 
     if(!paused) gameTime += deltaTime;
+    secTime = Math.trunc(gameTime / 1000);
+    minTime = Math.trunc(secTime/60);
+    remSecTime = (secTime % 60 | 0);
 
     if(!paused) dropCounter += deltaTime;
     if (dropCounter > dropInterval) {
@@ -265,6 +277,7 @@ function update(time = 0) {
     }
 
     lastTime = time;
+    document.getElementById('timer').innerText = "Time: " + format2(minTime) + ":" + format2(remSecTime);
 
     draw();
     requestAnimationFrame(update);
@@ -323,6 +336,10 @@ const player = {
     nextblock:null, 
     nbt: 'T',
 };
+
+function format2(n){
+    return n > 9 ? "" + n: "0" + n;
+}
 
 playerReset();
 updateScore();

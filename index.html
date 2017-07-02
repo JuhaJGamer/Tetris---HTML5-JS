@@ -40,6 +40,28 @@
         width:15vw;
         text-align: left;
       }
+      .blockinfo4 {
+        position:absolute;
+        float:all;
+        right:5vw;
+        top:35vw;
+        width:15vw;
+        text-align: right;
+      }
+      .blockinfo5 {
+        position:absolute;
+        float:all;
+        right:5vw;
+        top:38vw;
+        text-align: right;
+      }
+      .blockinfo6 {
+        position:absolute;
+        float:all;
+        right:5vw;
+        top:37vw;
+        text-align: right;
+      }
       canvas {
         border: solid .2em #fff;
         height: 90vh;
@@ -53,6 +75,9 @@
     <p class="blockinfo1">Next: </p>
     <p class="blockinfo2">Help:<br>&nbspQ - Rotate CCW<br>&nbspW - Rotate CW<br>&nbspArrows:<br>&nbsp&nbspLeft - Move left<br>&nbsp&nbspRight - Move right<br>&nbsp&nbspDown - Quick Drop<br>&nbspSpace - Pause </p>
     <p class="blockinfo3">SEE: Pausing deducts<br> 300 pts from your<br> score to prevent cheating</p>
+    <p class="blockinfo4" id="timer">Time: 00:00</p>
+    <p class="blockinfo5" id="lastscore"></p>
+    <p class="blockinfo6" id="lasttime"></p>
     <canvas class="nextblock" id="nextblock" width="80" height="80"></canvas>
     <script src="Tetris.js"></script>
 </body>
