@@ -7,7 +7,7 @@ audio.play();
 context.scale(20, 20);
 
 function arenaSweep() {
-    let rowCount = 1;
+    let rowCount = 0;
     outer: for (let y = arena.length -1; y > 0; --y) {
         for (let x = 0; x < arena[y].length; ++x) {
             if (arena[y][x] === 0) {
@@ -21,7 +21,9 @@ function arenaSweep() {
 
         rowCount++;
     }
-    player.score += scores[rowCount];
+
+    if(rowCount>0) player.score += scores[rowCount];
+    
 }
 
 function collide(arena, player) {
